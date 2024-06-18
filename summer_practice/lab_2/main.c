@@ -8,8 +8,8 @@ typedef struct
 {
     char name[50];
     char manufacturer[50];
-    char release_date[11]; // Формат "YYYY-MM-DD"
-    int shelf_life;        // у днях
+    char release_date[11]; // Format "YYYY-MM-DD"
+    int shelf_life;        // in days
     float price;
     int quantity;
     char department[50];
@@ -17,63 +17,60 @@ typedef struct
 
 void createFile()
 {
-    FILE *file =
-        fopen(FILENAME, "wb"); // binary write-для запису у двійковому режимі
+    FILE *file = fopen(FILENAME, "wb"); // binary write mode
     if (file == NULL)
     {
-        printf("Помилка створення файлу.\n");
+        printf("Error creating file.\n");
         return;
     }
     fclose(file);
-    printf("Файл створено.\n");
+    printf("File created.\n");
 }
 
 void addProduct()
 {
-    FILE *file =
-        fopen(FILENAME, "ab"); // binary append-додавання у двійковому режимі
+    FILE *file = fopen(FILENAME, "ab"); // binary append mode
     if (file == NULL)
     {
-        printf("Помилка відкриття файлу.\n");
+        printf("Error opening file.\n");
         return;
     }
 
     Product product;
-    printf("Введіть назву товару: ");
+    printf("Enter product name: ");
     scanf("%s", product.name);
-    printf("Введіть виробника: ");
+    printf("Enter manufacturer: ");
     scanf("%s", product.manufacturer);
-    printf("Введіть дату випуску (YYYY-MM-DD): ");
+    printf("Enter release date (YYYY-MM-DD): ");
     scanf("%s", product.release_date);
-    printf("Введіть термін придатності (в днях): ");
+    printf("Enter shelf life (in days): ");
     scanf("%d", &product.shelf_life);
-    printf("Введіть ціну одиниці продукції: ");
+    printf("Enter unit price: ");
     scanf("%f", &product.price);
-    printf("Введіть обсяг продукції: ");
+    printf("Enter quantity: ");
     scanf("%d", &product.quantity);
-    printf("Введіть назву відділу: ");
+    printf("Enter department name: ");
     scanf("%s", product.department);
 
     fwrite(&product, sizeof(Product), 1, file);
     fclose(file);
-    printf("Запис додано.\n");
+    printf("Record added.\n");
 }
 
 void viewProducts()
 {
-    FILE *file =
-        fopen(FILENAME, "rb"); // binary read-для читання у двійковому режимі
+    FILE *file = fopen(FILENAME, "rb"); // binary read mode
     if (file == NULL)
     {
-        printf("Файл не існує або помилка відкриття файлу.\n");
+        printf("File does not exist or error opening file.\n");
         return;
     }
 
     Product product;
     while (fread(&product, sizeof(Product), 1, file))
     {
-        printf("Назва: %s, Виробник: %s, Дата випуску: %s, Термін придатності: %d, "
-               "Ціна: %.2f, Обсяг: %d, Відділ: %s\n",
+        printf("Name: %s, Manufacturer: %s, Release Date: %s, Shelf Life: %d, "
+               "Price: %.2f, Quantity: %d, Department: %s\n",
                product.name, product.manufacturer, product.release_date,
                product.shelf_life, product.price, product.quantity,
                product.department);
@@ -85,13 +82,13 @@ void viewProducts()
 void searchProduct()
 {
     char searchName[50];
-    printf("Введіть назву товару для пошуку: ");
+    printf("Enter product name to search: ");
     scanf("%s", searchName);
 
     FILE *file = fopen(FILENAME, "rb");
     if (file == NULL)
     {
-        printf("Файл не існує або помилка відкриття файлу.\n");
+        printf("File does not exist or error opening file.\n");
         return;
     }
 
@@ -101,8 +98,8 @@ void searchProduct()
     {
         if (strcmp(product.name, searchName) == 0)
         {
-            printf("Знайдено товар: Назва: %s, Виробник: %s, Дата випуску: %s, "
-                   "Термін придатності: %d, Ціна: %.2f, Обсяг: %d, Відділ: %s\n",
+            printf("Product found: Name: %s, Manufacturer: %s, Release Date: %s, "
+                   "Shelf Life: %d, Price: %.2f, Quantity: %d, Department: %s\n",
                    product.name, product.manufacturer, product.release_date,
                    product.shelf_life, product.price, product.quantity,
                    product.department);
@@ -112,7 +109,7 @@ void searchProduct()
 
     if (!found)
     {
-        printf("Товару з такою назвою не знайдено.\n");
+        printf("No product found with that name.\n");
     }
 
     fclose(file);
@@ -121,13 +118,13 @@ void searchProduct()
 void printProductsByDepartment()
 {
     char searchDepartment[50];
-    printf("Введіть назву відділу: ");
+    printf("Enter department name: ");
     scanf("%s", searchDepartment);
 
     FILE *file = fopen(FILENAME, "rb");
     if (file == NULL)
     {
-        printf("Файл не існує або помилка відкриття файлу.\n");
+        printf("File does not exist or error opening file.\n");
         return;
     }
 
@@ -148,11 +145,11 @@ void printProductsByDepartment()
 
     if (count == 0)
     {
-        printf("Товарів у цьому відділі не знайдено.\n");
+        printf("No products found in this department.\n");
     }
     else
     {
-        // Сортування товарів за назвою в алфавітному порядку
+        // Sort products by name in alphabetical order
         for (int i = 0; i < count - 1; i++)
         {
             for (int j = 0; j < count - i - 1; j++)
@@ -166,17 +163,17 @@ void printProductsByDepartment()
             }
         }
 
-        printf("Товари у відділі %s:\n", searchDepartment);
+        printf("Products in department %s:\n", searchDepartment);
         for (int i = 0; i < count; i++)
         {
-            printf("Назва: %s, Виробник: %s, Дата випуску: %s, Термін придатності: "
-                   "%d, Ціна: %.2f, Обсяг: %d\n",
+            printf("Name: %s, Manufacturer: %s, Release Date: %s, Shelf Life: "
+                   "%d, Price: %.2f, Quantity: %d\n",
                    products[i].name, products[i].manufacturer,
                    products[i].release_date, products[i].shelf_life,
                    products[i].price, products[i].quantity);
         }
 
-        printf("Загальна вартість товарів у відділі %s: %.2f\n", searchDepartment,
+        printf("Total value of products in department %s: %.2f\n", searchDepartment,
                totalValue);
     }
 
@@ -190,14 +187,14 @@ int main()
 
     while (1)
     {
-        printf("\nМеню:\n");
-        printf("1. Створити файл\n");
-        printf("2. Додати запис у файл\n");
-        printf("3. Переглянути вміст файлу\n");
-        printf("4. Пошук товару за назвою\n");
-        printf("5. Вивести товари за відділом\n");
-        printf("6. Вийти\n");
-        printf("Виберіть опцію: ");
+        printf("\nMenu:\n");
+        printf("1. Create file\n");
+        printf("2. Add record to file\n");
+        printf("3. View file contents\n");
+        printf("4. Search product by name\n");
+        printf("5. List products by department\n");
+        printf("6. Exit\n");
+        printf("Choose an option: ");
         scanf("%d", &choice);
 
         switch (choice)
@@ -221,7 +218,7 @@ int main()
             exit(0);
             break;
         default:
-            printf("Невірний вибір. Спробуйте ще раз.\n");
+            printf("Invalid choice. Try again.\n");
         }
     }
 
