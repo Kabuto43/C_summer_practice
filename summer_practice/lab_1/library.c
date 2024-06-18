@@ -1,20 +1,17 @@
+#include "library.h"
 #include <stdlib.h>
-
-// =================================
-// Max
-// =================================
 
 int maxOfTwo(int a, int b) {
     return (a > b) ? a : b;
 }
 
 int maxOfThree(int a, int b, int c) {
-    return (a > b) ? ((a > c) ? a : c) : ((b > c) ? b : c);
+    return maxOfTwo(maxOfTwo(a, b), c);
 }
 
 int maxOf(int arr[], int n) {
     int max = arr[0];
-    for (int i = 1; i < n; i++) {
+    for (int i = 1; i < n; ++i) {
         if (arr[i] > max) {
             max = arr[i];
         }
@@ -24,8 +21,7 @@ int maxOf(int arr[], int n) {
 
 int maxInMatrix(int rows, int cols, int *matrix) {
     int max = matrix[0];
-
-    for (int i = 0; i < rows * cols; i++) {
+    for (int i = 0; i < rows * cols; ++i) {
         if (matrix[i] > max) {
             max = matrix[i];
         }
@@ -34,18 +30,16 @@ int maxInMatrix(int rows, int cols, int *matrix) {
 }
 
 int absMaxOfTwo(int a, int b) {
-    int el1 = abs(a), el2 = abs(b);
-    return (el1 > el2) ? el1 : el2;
+    return maxOfTwo(abs(a), abs(b));
 }
 
 int absMaxOfThree(int a, int b, int c) {
-    int el1 = abs(a), el2 = abs(b), el3 = abs(c);
-    return (el1 > el2) ? ((el1 > el3) ? el1 : el3) : ((el2 > el3) ? el2 : el3);
+    return maxOfThree(abs(a), abs(b), abs(c));
 }
 
 int absMaxOf(int arr[], int n) {
     int max = abs(arr[0]);
-    for (int i = 1; i < n; i++) {
+    for (int i = 1; i < n; ++i) {
         if (abs(arr[i]) > max) {
             max = abs(arr[i]);
         }
@@ -55,8 +49,7 @@ int absMaxOf(int arr[], int n) {
 
 int absMaxInMatrix(int rows, int cols, int *matrix) {
     int max = abs(matrix[0]);
-
-    for (int i = 0; i < rows * cols; i++) {
+    for (int i = 0; i < rows * cols; ++i) {
         if (abs(matrix[i]) > max) {
             max = abs(matrix[i]);
         }
@@ -64,21 +57,17 @@ int absMaxInMatrix(int rows, int cols, int *matrix) {
     return max;
 }
 
-// =================================
-// Min
-// =================================
-
 int minOfTwo(int a, int b) {
     return (a < b) ? a : b;
 }
 
 int minOfThree(int a, int b, int c) {
-    return (a < b) ? ((a < c) ? a : c) : ((b < c) ? b : c);
+    return minOfTwo(minOfTwo(a, b), c);
 }
 
 int minOf(int arr[], int n) {
     int min = arr[0];
-    for (int i = 1; i < n; i++) {
+    for (int i = 1; i < n; ++i) {
         if (arr[i] < min) {
             min = arr[i];
         }
@@ -88,8 +77,7 @@ int minOf(int arr[], int n) {
 
 int minInMatrix(int rows, int cols, int *matrix) {
     int min = matrix[0];
-
-    for (int i = 0; i < rows * cols; i++) {
+    for (int i = 0; i < rows * cols; ++i) {
         if (matrix[i] < min) {
             min = matrix[i];
         }
@@ -98,18 +86,16 @@ int minInMatrix(int rows, int cols, int *matrix) {
 }
 
 int absMinOfTwo(int a, int b) {
-    int el1 = abs(a), el2 = abs(b);
-    return (el1 < el2) ? el1 : el2;
+    return minOfTwo(abs(a), abs(b));
 }
 
 int absMinOfThree(int a, int b, int c) {
-    int el1 = abs(a), el2 = abs(b), el3 = abs(c);
-    return (el1 < el2) ? ((el1 < el3) ? el1 : el3) : ((el2 < el3) ? el2 : el3);
+    return minOfThree(abs(a), abs(b), abs(c));
 }
 
 int absMinOf(int arr[], int n) {
     int min = abs(arr[0]);
-    for (int i = 1; i < n; i++) {
+    for (int i = 1; i < n; ++i) {
         if (abs(arr[i]) < min) {
             min = abs(arr[i]);
         }
@@ -119,8 +105,7 @@ int absMinOf(int arr[], int n) {
 
 int absMinInMatrix(int rows, int cols, int *matrix) {
     int min = abs(matrix[0]);
-
-    for (int i = 0; i < rows * cols; i++) {
+    for (int i = 0; i < rows * cols; ++i) {
         if (abs(matrix[i]) < min) {
             min = abs(matrix[i]);
         }
